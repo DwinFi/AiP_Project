@@ -1,0 +1,32 @@
+<h1 class="mb-4"><%= title %></h1>
+
+<img class="plane-img mb-4" src="<%= picture %>" alt="<%= title %>">
+
+<h3>Описание:</h3>
+<p><%= desc %></p>
+
+<h3 class="mt-4">Лётные характеристики</h3>
+<table class="table table-dark table-striped table-bordered mt-2">
+    <tbody>
+        <% for (let key in flight) { %>
+            <tr>
+                <th><%= key %></th>
+                <td><%= flight[key] %></td>
+            </tr>
+        <% } %>
+    </tbody>
+</table>
+
+<h3 class="mt-4">Технические характеристики</h3>
+<table class="table table-dark table-striped table-bordered mt-2">
+    <tbody>
+        <% for (let key in tech) { %>
+            <tr>
+                <th><%= key %></th>
+                <td><%= tech[key] %></td>
+            </tr>
+        <% } %>
+    </tbody>
+</table>
+
+<a class="btn btn-secondary mt-3" href="/">Назад</a>

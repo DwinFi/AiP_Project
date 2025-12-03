@@ -1,0 +1,16 @@
+body {
+    background-color: #0f0f0f;
+}
+
+.card img {
+    object-fit: cover;
+    height: 260px;
+}
+
+.navbar-brand {
+    font-size: 1.4rem;
+}
+
+a {
+    text-decoration: none;
+}
