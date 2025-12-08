@@ -1,3 +1,6 @@
+var data = require("./data.js").data;
+console.log(data);
+
 // createDB.js
 const { MongoClient } = require('mongodb');
 
