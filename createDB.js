@@ -1,8 +1,5 @@
-var data = require("./data.js").data;
-console.log(data);
-
-// createDB.js
 const { MongoClient } = require('mongodb');
+var data = require("./data.js").data;
 
 // Connection URL
 const url = 'mongodb://localhost:27017';
@@ -12,51 +9,21 @@ const client = new MongoClient(url);
 const dbName = 'aviationDB';
 
 async function main() {
-  // Connect to server
+  // Connect to MongoDB
   await client.connect();
   console.log('✔ Connected successfully to MongoDB');
 
   const db = client.db(dbName);
-  const planes = db.collection('planes');
+  const collection = db.collection('planes'); // коллекция самолётов
 
-  // Documents to insert
-  const docs = [
-    {
-      name: "БИ-1",
-      image: "/images/bi.png",
-      description: "Первый советский ракетный истребитель.",
-      addedAt: new Date()
-    },
-    {
-      name: "Horten Ho 229",
-      image: "/images/ho229.png",
-      description: "Немецкий реактивный самолёт «летающее крыло».",
-      addedAt: new Date()
-    },
-    {
-      name: "F-117 Nighthawk",
-      image: "/images/f117.png",
-      description: "Первый серийный стелс-самолёт США.",
-      addedAt: new Date()
-    }
-  ];
-
-  // Insert documents
-  const insertResult = await planes.insertMany(docs);
+  // Вставляем ВСЁ из data.js
+  const insertResult = await collection.insertMany(data);
   console.log('✔ Inserted documents =>', insertResult.insertedCount);
-
-  // For demo: list inserted documents (optional)
-  const all = await planes.find({}).toArray();
-  console.log('Current documents in collection "planes":');
-  all.forEach(doc => console.log('-', doc.name));
 
   return 'done';
 }
 
 main()
   .then(console.log)
-  .catch(err => {
-    console.error('Error in script:', err);
-    process.exitCode = 1;
-  })
+  .catch(console.error)
   .finally(() => client.close());
