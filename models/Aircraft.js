@@ -1,43 +1,61 @@
 // models/Aircraft.js
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const FlightSpecsSchema = new mongoose.Schema({
-  maxSpeed_atAlt: { type: String },       // e.g. "799 км/ч на высоте 2000 м"
-  climbRate: { type: String },            // e.g. "100 м/с"
-  turnTime: { type: String },             // e.g. "23 с"
-  maxAltitude: { type: String },          // e.g. "12000 м"
-  takeoffRun: { type: String }            // e.g. "300 м"
+
+const FlightSpecsSchema = new Schema({
+  maxSpeed_atAlt: String,
+  climbRate: String,
+  turnTime: String,
+  maxAltitude: String,
+  takeoffRun: String
 }, { _id: false });
 
-const TechnicalSchema = new mongoose.Schema({
-  crew: { type: String },
-  engine: { type: String },
-  length: { type: String },
-  wingspan: { type: String },
-  wingLoading: { type: String },
-  baseMass: { type: String },
-  fuelInMainTanks: { type: String },
-  limits: { type: String }                // e.g. "Предельная скорость 920 км/ч, M=0.81"
+const TechnicalSchema = new Schema({
+  crew: String,
+  engine: String,
+  length: String,
+  wingspan: String,
+  wingLoading: String,
+  baseMass: String,
+  fuelInMainTanks: String,
+  limits: String
 }, { _id: false });
 
-const ArmamentSchema = new mongoose.Schema({
-  guns: { type: String },                 // e.g. "2 × 20-мм ШВАК"
-  ammo: { type: String },                 // e.g. "90 снарядов"
-  rateOfFire: { type: String },           // e.g. "800 выст./мин."
-  maxPayload: { type: String }            // e.g. "8165 кг"
+const ArmamentSchema = new Schema({
+  guns: String,
+  ammo: String,
+  rateOfFire: String,
+  maxPayload: String
 }, { _id: false });
 
-const AircraftSchema = new mongoose.Schema({
-  name: { type: String, required: true },        // "БИ-1", "Horten Ho 229", "F-117 Nighthawk"
-  nick: { type: String },                        // short id: bi, ho229, f117
-  image: { type: String },                       // путь к картинке: "/images/bi.png"
-  description: { type: String },
+const AircraftSchema = new Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  nick: {
+    type: String,
+    required: true,
+    unique: true        
+  },
+  image: String,
+  description: String,
 
   flightSpecs: FlightSpecsSchema,
   technical: TechnicalSchema,
   armament: ArmamentSchema,
 
-  addedAt: { type: Date, default: Date.now }
+  created: {
+    type: Date,
+    default: Date.now   
+  }
 });
 
+
+AircraftSchema.methods.info = function () {
+  console.log(`Самолёт "${this.name}" сохранён в базе`);
+};
+
 module.exports = mongoose.model('Aircraft', AircraftSchema);
+
