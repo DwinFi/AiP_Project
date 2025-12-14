@@ -9,6 +9,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/tc2024');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var aircraftsRouter = require('./routes/aircrafts');
 
 var app = express();
 
@@ -29,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/aircrafts', aircraftsRouter);
 
 // 404 handler
 app.use(function(req, res, next) {
