@@ -5,7 +5,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://127.0.0.1:27017/tc2024');
+
+// ✅ Подключаем ТУ ЖЕ БД, где лежат самолёты
+mongoose.connect('mongodb://127.0.0.1:27017/aviationDB');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -13,7 +15,7 @@ var aircraftsRouter = require('./routes/aircrafts');
 
 var app = express();
 
-// View engine
+// View engine (EJS — это нормально)
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -28,6 +30,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Routes
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/aircrafts', aircraftsRouter);

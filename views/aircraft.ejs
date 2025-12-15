@@ -1,0 +1,23 @@
+<h1><%= aircraft.name %></h1>
+
+<img src="<%= aircraft.image %>" alt="<%= aircraft.name %>" width="400">
+
+<p><%= aircraft.description %></p>
+
+<h2>Лётные характеристики</h2>
+<ul>
+  <li>Макс. скорость: <%= aircraft.flightSpecs.maxSpeed_atAlt %></li>
+  <li>Скороподъёмность: <%= aircraft.flightSpecs.climbRate %></li>
+  <li>Потолок: <%= aircraft.flightSpecs.maxAltitude %></li>
+</ul>
+
+<h2>Технические данные</h2>
+<ul>
+  <li>Экипаж: <%= aircraft.technical.crew %></li>
+  <li>Двигатель: <%= aircraft.technical.engine %></li>
+</ul>
+
+<h2>Вооружение</h2>
+<ul>
+  <li>Орудия: <%= aircraft.armament.guns %></li>
+</ul>
