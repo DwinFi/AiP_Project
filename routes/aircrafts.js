@@ -2,23 +2,25 @@ var express = require('express');
 var router = express.Router();
 var Aircraft = require('../models/Aircraft');
 
-router.get('/', function(req, res, next) {
-  res.send('Маршрутизатор авиационной техники');
+router.get('/', function(req, res) {
+  res.send('Маршрутизатор самолётов работает');
 });
 
 router.get('/:nick', async function(req, res, next) {
   try {
-    const aircrafts = await Aircraft.find({ nick: req.params.nick });
+    const aircraft = await Aircraft.findOne({ nick: req.params.nick });
 
-    if (!aircrafts.length) {
-      return next(new Error('Самолёт с таким идентификатором не найден'));
+    if (!aircraft) {
+      return next(new Error('Самолёт не найден'));
     }
 
-    const aircraft = aircrafts[0];
-
     res.render('aircraft', {
-      title: aircraft.name,
-      aircraft: aircraft
+      title: aircraft.title,
+      avatar: aircraft.avatar,
+      desc: aircraft.desc,
+      flightSpecs: aircraft.flightSpecs,
+      technical: aircraft.technical,
+      armament: aircraft.armament
     });
 
   } catch (err) {
