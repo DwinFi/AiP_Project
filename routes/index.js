@@ -3,10 +3,10 @@ var router = express.Router();
 
 router.get('/', function(req, res) {
 
-  if (!req.session.views) {
-    req.session.views = 1;
+  if (!req.session.counter) {
+    req.session.counter = 1;
   } else {
-    req.session.views++;
+    req.session.counter++;
   }
 
   req.session.save(function (err) {
@@ -14,9 +14,13 @@ router.get('/', function(req, res) {
       console.log('Session save error:', err);
     }
 
+  
     res
       .cookie('greeting', 'Hi!!!')
-      .render('index', { title: 'Unusual Military Aviation' });
+      .render('index', {
+        title: 'Unusual Military Aviation',
+        counter: req.session.counter
+      });
   });
 });
 
@@ -25,18 +29,7 @@ router.get('/bi1', function(req, res) {
   res.render('plane', {
     title: "Советский истребитель БИ-1",
     picture: "/images/bi.png",
-    desc: "БИ (от Березняк-Исаев) — советский опытный перехватчик-ракетоплан.",
-    flight: {
-      "Максимальная скорость (2000 м)": "799 км/ч",
-      "Скороподъёмность": "100 м/с",
-      "Время виража": "23 с",
-      "Максимальная высота": "12 000 м",
-      "Длина разбега": "300 м"
-    },
-    tech: {
-      "Экипаж": "1 человек",
-      "Двигатель": "Исаев Д-1а"
-    }
+    desc: "БИ (от Березняк-Исаев) — советский опытный перехватчик-ракетоплан."
   });
 });
 
