@@ -3,22 +3,44 @@ var router = express.Router();
 
 router.get('/register', function (req, res) {
     res.render('register', {
-        title: 'Регистрация'
+        title: 'Регистрация',
+        errors: [],
+        success: false,
+        formData: {}
     });
 });
 
 router.post('/register', function (req, res) {
 
     const { username, email, password, password2 } = req.body;
+    let errors = [];
 
-    console.log('--- Registration form data ---');
-    console.log('Username:', username);
-    console.log('Email:', email);
-    console.log('Password:', password);
-    console.log('Repeat password:', password2);
-    console.log('------------------------------');
+    if (!username || !email || !password || !password2) {
+        errors.push('Все поля обязательны для заполнения');
+    }
 
-    res.redirect('/register');
+    if (password !== password2) {
+        errors.push('Пароли не совпадают');
+    }
+
+    if (errors.length > 0) {
+        return res.render('register', {
+            title: 'Регистрация',
+            errors: errors,
+            success: false,
+            formData: {
+                username,
+                email
+            }
+        });
+    }
+
+    res.render('register', {
+        title: 'Регистрация',
+        errors: [],
+        success: true,
+        formData: {}
+    });
 });
 
 module.exports = router;
