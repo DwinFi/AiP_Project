@@ -58,6 +58,11 @@
             color: #777;
             border-top: 1px solid #333;
         }
+
+        .info-bar {
+            font-size: 14px;
+            color: #aaa;
+        }
     </style>
 </head>
 
@@ -77,17 +82,22 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/">Главная</a>
                 </li>
-               <li class="nav-item"><a class="nav-link" href="/aircrafts/bi1">БИ-1</a></li>
-                </li>
+                <li class="nav-item"><a class="nav-link" href="/aircrafts/bi1">БИ-1</a></li>
                 <li class="nav-item"><a class="nav-link" href="/aircrafts/ho229">Ho 229</a></li>
-                </li>
                 <li class="nav-item"><a class="nav-link" href="/aircrafts/f117">F-117</a></li>
-                </li>
             </ul>
         </div>
 
     </div>
 </nav>
+
+<div class="container info-bar mb-3 text-center">
+    <% if (greeting) { %>
+        <span class="me-3">Cookie: <strong><%= greeting %></strong></span>
+    <% } %>
+
+    <span>Посещений за сессию: <strong><%= counter %></strong></span>
+</div>
 
 <div class="container">
     <%- body %>
