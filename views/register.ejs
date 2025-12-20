@@ -3,26 +3,50 @@
 <div class="row justify-content-center">
     <div class="col-md-6">
 
-        <form>
+        <form action="/register" method="POST">
 
             <div class="mb-3">
                 <label class="form-label">Имя пользователя</label>
-                <input type="text" class="form-control" placeholder="Введите имя">
+                <input
+                    type="text"
+                    name="username"
+                    class="form-control"
+                    placeholder="Введите имя"
+                    required
+                >
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Email</label>
-                <input type="email" class="form-control" placeholder="Введите email">
+                <input
+                    type="email"
+                    name="email"
+                    class="form-control"
+                    placeholder="Введите email"
+                    required
+                >
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Пароль</label>
-                <input type="password" class="form-control" placeholder="Введите пароль">
+                <input
+                    type="password"
+                    name="password"
+                    class="form-control"
+                    placeholder="Введите пароль"
+                    required
+                >
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Повторите пароль</label>
-                <input type="password" class="form-control" placeholder="Повторите пароль">
+                <input
+                    type="password"
+                    name="password2"
+                    class="form-control"
+                    placeholder="Повторите пароль"
+                    required
+                >
             </div>
 
             <button type="submit" class="btn btn-outline-light w-100">
