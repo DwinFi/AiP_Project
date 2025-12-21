@@ -1,13 +1,20 @@
 <h1 class="text-center mb-4"><%= title %></h1>
 
-<!-- Счётчик посещений (пункт 9.4) -->
-<p class="text-center text-muted">
-    Вы посетили сайт
-    <strong><%= counter %></strong>
-    раз(а) за текущую сессию
+<% if (user) { %>
+    <div class="alert alert-success text-center">
+        Привет, <strong><%= user.username %></strong> 👋
+    </div>
+<% } else { %>
+    <div class="alert alert-warning text-center">
+        Вы не вошли в систему. Пожалуйста, авторизуйтесь.
+    </div>
+<% } %>
+
+<p class="text-center">
+    Счётчик посещений за сессию: <strong><%= counter %></strong>
 </p>
 
-<!-- Адаптивная карусель -->
+<!-- Карусель самолётов (оставляем как было) -->
 <div id="planesCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
 
     <div class="carousel-inner">
@@ -26,7 +33,6 @@
 
     </div>
 
-    <!-- Управление -->
     <button class="carousel-control-prev" type="button" data-bs-target="#planesCarousel" data-bs-slide="prev">
         <span class="carousel-control-prev-icon"></span>
     </button>
@@ -36,8 +42,3 @@
     </button>
 
 </div>
-
-<p class="text-center mt-4">
-    Добро пожаловать! Используйте меню, чтобы перейти к подробной информации
-    о самых необычных военных самолётах.
-</p>

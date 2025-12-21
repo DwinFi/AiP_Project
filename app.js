@@ -45,6 +45,8 @@ app.use(
     })
 );
 
+app.use(require("./middlewares/createUser.js"));
+
 app.use(function (req, res, next) {
     if (!req.session.counter) {
         req.session.counter = 1;
