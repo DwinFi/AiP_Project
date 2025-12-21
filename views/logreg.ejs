@@ -1,29 +1,27 @@
-<h1 class="text-center mb-4">Вход / Регистрация</h1>
+<h1 class="mb-4 text-center"><%= title %></h1>
 
-<div class="row justify-content-center">
-    <div class="col-md-5">
+<form method="POST" action="/logreg" class="mx-auto" style="max-width:400px;">
 
-        <% if (error) { %>
-            <div class="alert alert-danger"><%= error %></div>
-        <% } %>
-
-        <form action="/logreg" method="POST">
-
-            <div class="mb-3">
-                <label class="form-label">Имя пользователя</label>
-                <input type="text" name="username" class="form-control" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Пароль</label>
-                <input type="password" name="password" class="form-control" required>
-            </div>
-
-            <button type="submit" class="btn btn-outline-light w-100">
-                Войти / Зарегистрироваться
-            </button>
-
-        </form>
-
+    <div class="mb-3">
+        <label class="form-label">Имя пользователя</label>
+        <input type="text" name="username" class="form-control" required>
     </div>
-</div>
+
+    <div class="mb-3">
+        <label class="form-label">Пароль</label>
+        <input type="password" name="password" class="form-control" required>
+    </div>
+
+    <div class="d-grid">
+        <button type="submit" class="btn btn-primary">
+            Войти / Зарегистрироваться
+        </button>
+    </div>
+
+    <% if (error) { %>
+        <div class="alert alert-danger mt-3 text-center">
+            <%= error %>
+        </div>
+    <% } %>
+
+</form>

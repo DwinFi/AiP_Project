@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/user').User;
 
+/* Главная */
 router.get('/', function(req, res) {
 
   if (!req.session.counter) {
@@ -24,25 +25,23 @@ router.get('/', function(req, res) {
   });
 });
 
-router.get('/logreg', function(req, res) {
+/* GET login/registration page */
+router.get('/logreg', function(req, res, next) {
   res.render('logreg', {
     title: 'Вход',
     error: null
   });
 });
 
+/* POST login/registration page */
 router.post('/logreg', async function(req, res, next) {
-
   var username = req.body.username;
   var password = req.body.password;
 
-  console.log(username);
-  console.log(password);
-
   var users = await User.find({ username: username });
-  console.log(users);
 
   if (!users.length) {
+    // пользователь не найден — регистрация
     var user = new User({
       username: username,
       password: password
@@ -50,34 +49,33 @@ router.post('/logreg', async function(req, res, next) {
 
     await user.save();
     req.session.user_id = user._id;
-
-    return res.redirect('/');
+    res.redirect('/');
   } else {
+    // пользователь найден — проверка пароля
     var foundUser = users[0];
 
     if (foundUser.checkPassword(password)) {
       req.session.user_id = foundUser._id;
-      return res.redirect('/');
+      res.redirect('/');
     } else {
-      return res.render('logreg', {
+      // ❗ ошибка аутентификации
+      res.render('logreg', {
         title: 'Вход',
-        error: 'Неверный пароль'
+        error: 'Пароль не верный'
       });
     }
   }
 });
 
-
-/* БИ-1 */
+/* Самолёты */
 router.get('/bi1', function(req, res) {
   res.render('plane', {
     title: "Советский истребитель БИ-1",
     picture: "/images/bi.png",
-    desc: "БИ (от Березняк-Исаев) — советский опытный перехватчик-ракетоплан."
+    desc: "БИ — советский опытный перехватчик-ракетоплан."
   });
 });
 
-/* Ho 229 */
 router.get('/ho229', function(req, res) {
   res.render('plane', {
     title: "Horten Ho 229",
@@ -86,7 +84,6 @@ router.get('/ho229', function(req, res) {
   });
 });
 
-/* F-117 */
 router.get('/f117', function(req, res) {
   res.render('plane', {
     title: "F-117 Nighthawk",
