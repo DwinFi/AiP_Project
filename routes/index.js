@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var User = require('../models/user').User;
 
 router.get('/', function(req, res) {
 
@@ -14,7 +15,6 @@ router.get('/', function(req, res) {
       console.log('Session save error:', err);
     }
 
-  
     res
       .cookie('greeting', 'Hi!!!')
       .render('index', {
@@ -23,6 +23,50 @@ router.get('/', function(req, res) {
       });
   });
 });
+
+router.get('/logreg', function(req, res) {
+  res.render('logreg', {
+    title: 'Вход',
+    error: null
+  });
+});
+
+router.post('/logreg', async function(req, res, next) {
+
+  var username = req.body.username;
+  var password = req.body.password;
+
+  console.log(username);
+  console.log(password);
+
+  var users = await User.find({ username: username });
+  console.log(users);
+
+  if (!users.length) {
+    var user = new User({
+      username: username,
+      password: password
+    });
+
+    await user.save();
+    req.session.user_id = user._id;
+
+    return res.redirect('/');
+  } else {
+    var foundUser = users[0];
+
+    if (foundUser.checkPassword(password)) {
+      req.session.user_id = foundUser._id;
+      return res.redirect('/');
+    } else {
+      return res.render('logreg', {
+        title: 'Вход',
+        error: 'Неверный пароль'
+      });
+    }
+  }
+});
+
 
 /* БИ-1 */
 router.get('/bi1', function(req, res) {
