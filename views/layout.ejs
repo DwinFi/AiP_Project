@@ -5,7 +5,6 @@
 
     <title><%= typeof title !== 'undefined' ? title : "Unusual Military Aviation" %></title>
 
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -21,33 +20,27 @@
             border-bottom: 1px solid #222;
         }
 
-        .nav-link {
+        .nav-link, .nav-link button {
             color: #ccc !important;
             font-size: 17px;
             margin-left: 10px;
+            background: none;
+            border: none;
         }
 
         .nav-link:hover {
             color: #fff !important;
         }
 
+        /* === ВАЖНО: ФИКС КАРТИНОК САМОЛЁТОВ === */
         .plane-img {
-            max-width: 70%;
+            max-width: 900px;
+            width: 100%;
             display: block;
-            margin: auto;
+            margin: 0 auto 20px auto;
             border-radius: 12px;
             border: 2px solid #333;
             box-shadow: 0 0 25px rgba(0,0,0,0.8);
-        }
-
-        table {
-            background-color: #151515;
-            border: 1px solid #333;
-        }
-
-        td, th {
-            color: #eee !important;
-            border-color: #333 !important;
         }
 
         footer {
@@ -75,34 +68,22 @@
         <div class="collapse navbar-collapse" id="menu">
             <ul class="navbar-nav ms-auto align-items-center">
 
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Главная</a>
-                </li>
+                <li class="nav-item"><a class="nav-link" href="/">Главная</a></li>
+                <li class="nav-item"><a class="nav-link" href="/aircrafts/bi1">БИ-1</a></li>
+                <li class="nav-item"><a class="nav-link" href="/aircrafts/ho229">Ho 229</a></li>
+                <li class="nav-item"><a class="nav-link" href="/aircrafts/f117">F-117</a></li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="/aircrafts/bi1">БИ-1</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="/aircrafts/ho229">Ho 229</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="/aircrafts/f117">F-117</a>
-                </li>
-
-                <!-- Блок аутентификации -->
                 <% if (user) { %>
-                    <li class="nav-item">
-                        <span class="nav-link text-success">
-                            👤 <%= user.username %>
-                        </span>
-                    </li>
+                    <form action="/logout" method="post" class="d-inline">
+                        <li class="nav-item">
+                            <button type="submit" class="nav-link">
+                                Выйти (<%= user.username %>)
+                            </button>
+                        </li>
+                    </form>
                 <% } else { %>
                     <li class="nav-item">
-                        <a class="btn btn-outline-light ms-3" href="/logreg">
-                            Войти / Регистрация
-                        </a>
+                        <a class="nav-link" href="/logreg">Войти</a>
                     </li>
                 <% } %>
 

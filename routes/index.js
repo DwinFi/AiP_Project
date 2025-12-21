@@ -27,10 +27,7 @@ router.get('/', function(req, res) {
 
 /* GET login/registration page */
 router.get('/logreg', function(req, res, next) {
-  res.render('logreg', {
-    title: 'Вход',
-    error: null
-  });
+  res.render('logreg', { title: 'Вход', error: null });
 });
 
 /* POST login/registration page */
@@ -41,24 +38,16 @@ router.post('/logreg', async function(req, res, next) {
   var users = await User.find({ username: username });
 
   if (!users.length) {
-    // пользователь не найден — регистрация
-    var user = new User({
-      username: username,
-      password: password
-    });
-
+    var user = new User({ username: username, password: password });
     await user.save();
     req.session.user_id = user._id;
     res.redirect('/');
   } else {
-    // пользователь найден — проверка пароля
     var foundUser = users[0];
-
     if (foundUser.checkPassword(password)) {
       req.session.user_id = foundUser._id;
       res.redirect('/');
     } else {
-      // ❗ ошибка аутентификации
       res.render('logreg', {
         title: 'Вход',
         error: 'Пароль не верный'
@@ -67,28 +56,10 @@ router.post('/logreg', async function(req, res, next) {
   }
 });
 
-/* Самолёты */
-router.get('/bi1', function(req, res) {
-  res.render('plane', {
-    title: "Советский истребитель БИ-1",
-    picture: "/images/bi.png",
-    desc: "БИ — советский опытный перехватчик-ракетоплан."
-  });
-});
-
-router.get('/ho229', function(req, res) {
-  res.render('plane', {
-    title: "Horten Ho 229",
-    picture: "/images/ho229.png",
-    desc: "Экспериментальное реактивное летающее крыло Люфтваффе."
-  });
-});
-
-router.get('/f117', function(req, res) {
-  res.render('plane', {
-    title: "F-117 Nighthawk",
-    picture: "/images/f117.png",
-    desc: "Первый в мире серийный стелс-самолёт."
+router.post('/logout', function(req, res, next) {
+  req.session.destroy(function () {
+    res.locals.user = null;
+    res.redirect('/');
   });
 });
 
