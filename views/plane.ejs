@@ -1,40 +1,77 @@
 <h1 class="mb-4 text-center"><%= title %></h1>
 
-<img
-    src="<%= picture %>"
-    alt="<%= title %>"
-    class="plane-img img-fluid mb-4"
-/>
+<% if (images && images.length) { %>
+<div id="aircraftCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
 
-<h3>Описание:</h3>
-<p><%= desc %></p>
+  <div class="carousel-inner">
+    <% images.forEach((img, index) => { %>
+      <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+        <img
+          src="<%= img %>"
+          class="d-block mx-auto img-fluid rounded shadow"
+          style="max-height: 600px; object-fit: contain;"
+          alt="<%= title %>"
+        >
+      </div>
+    <% }) %>
+  </div>
 
-<% if (typeof flight !== 'undefined') { %>
+  <button class="carousel-control-prev" type="button" data-bs-target="#aircraftCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+
+  <button class="carousel-control-next" type="button" data-bs-target="#aircraftCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+
+</div>
+<% } %>
+
+<h3>Описание</h3>
+<p style="text-align: justify"><%= desc %></p>
+
+<% if (flight) { %>
 <h3 class="mt-4">Лётные характеристики</h3>
-<table class="table table-dark table-striped table-bordered mt-2">
-    <tbody>
-        <% for (let key in flight) { %>
-            <tr>
-                <th><%= key %></th>
-                <td><%= flight[key] %></td>
-            </tr>
-        <% } %>
-    </tbody>
+<table class="table table-dark table-striped table-bordered">
+  <% for (let key in flight) { %>
+    <tr>
+      <th><%= key %></th>
+      <td><%= flight[key] %></td>
+    </tr>
+  <% } %>
 </table>
 <% } %>
 
-<% if (typeof tech !== 'undefined') { %>
+<% if (tech) { %>
 <h3 class="mt-4">Технические характеристики</h3>
-<table class="table table-dark table-striped table-bordered mt-2">
-    <tbody>
-        <% for (let key in tech) { %>
-            <tr>
-                <th><%= key %></th>
-                <td><%= tech[key] %></td>
-            </tr>
-        <% } %>
-    </tbody>
+<table class="table table-dark table-striped table-bordered">
+  <% for (let key in tech) { %>
+    <tr>
+      <th><%= key %></th>
+      <td><%= tech[key] %></td>
+    </tr>
+  <% } %>
 </table>
 <% } %>
 
-<a class="btn btn-secondary mt-3" href="/">Назад</a>
+<% if (armament && armament.length) { %>
+<h3 class="mt-4">Доступное вооружение</h3>
+<table class="table table-dark table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>Название</th>
+      <th>Вес</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% armament.forEach(item => { %>
+      <tr>
+        <td><%= item.name %></td>
+        <td><%= item.weight %></td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+<% } %>
+
+<a href="/" class="btn btn-secondary mt-3">Назад</a>

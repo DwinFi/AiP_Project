@@ -3,10 +3,6 @@ var router = express.Router();
 var Aircraft = require('../models/Aircraft');
 var checkAuth = require('../middlewares/checkAuth');
 
-router.get('/', function(req, res) {
-  res.send('Маршрутизатор самолётов работает');
-});
-
 router.get('/:nick', checkAuth, async function(req, res, next) {
   try {
     const aircraft = await Aircraft.findOne({ nick: req.params.nick });
@@ -17,7 +13,9 @@ router.get('/:nick', checkAuth, async function(req, res, next) {
 
     res.render('plane', {
       title: aircraft.title,
-      picture: aircraft.avatar,
+
+      images: aircraft.images,
+
       desc: aircraft.desc,
       flight: aircraft.flightSpecs,
       tech: aircraft.technical,
